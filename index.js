@@ -15,7 +15,11 @@ module.exports = function(content) {
 	var config = {
 		publicPath: undefined,
 		useRelativePath: false,
-		name: "[hash].[ext]"
+		name: "[hash].[ext]",
+        replacerRegExp: true,
+        replacerSearch: '',
+        replacerModifers: '',
+        replacerReplace: '',
 	};
 
 	// options takes precedence over config
@@ -34,6 +38,14 @@ module.exports = function(content) {
 		content: content,
 		regExp: config.regExp
 	});
+
+    if(config.replacerSearch) {
+        if(config.replacerRegExp) {
+            config.replacerSearch = new RegExp(config.replacerSearch, config.replacerModifers);
+        }
+
+        url = url.replace(config.replacerSearch, config.replacerReplace)
+    }
 
 	var outputPath = "";
 
